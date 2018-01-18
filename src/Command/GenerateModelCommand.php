@@ -11,6 +11,14 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
+ * Custom Type Definitions
+ */
+use Doctrine\DBAL\Types\Type;
+use Jsor\Doctrine\PostGIS\Types\RasterType;
+use Jsor\Doctrine\PostGIS\Types\GeometryType;
+use Jsor\Doctrine\PostGIS\Types\GeographyType;
+
+/**
  * Class GenerateModelCommand
  * @package Krlove\EloquentModelGenerator\Command
  */
@@ -42,6 +50,11 @@ class GenerateModelCommand extends Command
 
         $this->generator = $generator;
         $this->appConfig = $appConfig;
+
+        Type::addType('_int4', 'Doctrine\DBAL\Types\IntegerType');
+        Type::addType('raster', 'Jsor\Doctrine\PostGIS\Types\RasterType');
+        Type::addType('geometry', 'Jsor\Doctrine\PostGIS\Types\GeometryType');
+        Type::addType('geography', 'Jsor\Doctrine\PostGIS\Types\GeographyType');
     }
 
     /**

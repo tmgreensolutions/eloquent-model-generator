@@ -11,6 +11,7 @@
   "require": {
     "laravel/framework": "^5.0",
     "doctrine/dbal": "^2.5",
-    "krlove/code-generator": "^1.0"
+    "krlove/code-generator": "^1.0",
+    "jsor/doctrine-postgis": "^1.5"
   }
 }

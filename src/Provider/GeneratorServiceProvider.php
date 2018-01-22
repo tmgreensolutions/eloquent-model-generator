@@ -2,8 +2,8 @@
 
 namespace Krlove\EloquentModelGenerator\Provider;
 
-#use Illuminate\Foundation\Application;
-use Laravel\Lumen\Application;
+use Illuminate\Foundation\Application;
+#use Laravel\Lumen\Application;
 use Illuminate\Support\ServiceProvider;
 use Krlove\EloquentModelGenerator\Command\GenerateModelCommand;
 use Krlove\EloquentModelGenerator\EloquentModelBuilder;

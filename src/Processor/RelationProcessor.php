@@ -265,7 +265,7 @@ class RelationProcessor implements ProcessorInterface
                     continue;
                 }
             }
-            $item = sprintf("'%s'", $item);
+            $item = sprintf("'%s'", str_replace('"', "", $item));
         }
 
         return implode(', ', array_reverse($array));

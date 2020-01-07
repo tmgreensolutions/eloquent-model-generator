@@ -12,5 +12,6 @@ return [
         'Jsor\Doctrine\PostGIS\Types\GeometryType'  => 'geometry',
         'Jsor\Doctrine\PostGIS\Types\GeographyType' => 'geography',
         '_int4'                                     => 'integer',
+        'backup'          => null,
     ],
 ];

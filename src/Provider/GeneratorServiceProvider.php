@@ -22,6 +22,7 @@ use Krlove\EloquentModelGenerator\Processor\TableNameProcessor;
 class GeneratorServiceProvider extends ServiceProvider
 {
     const PROCESSOR_TAG = 'eloquent_model_generator.processor';
+
     /**
      * {@inheritDoc}
      */

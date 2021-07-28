@@ -1,5 +1,17 @@
 CHANGELOG
 =========
+2021-03-07, v1.3.7
+-----------------
+* Add Doctrine DBAL 3.0 support
+
+2020-10-03, v1.3.6
+-----------------
+* Add Laravel 8 support
+
+2020-09-04, v1.3.5
+-----------------
+* Merged PR [#69](https://github.com/krlove/eloquent-model-generator/pull/69) (Update composer.json)
+
 2019-11-03, v1.3.4
 -----------------
 * Add quote for table prefix (issue [#59](https://github.com/krlove/eloquent-model-generator/issues/59))

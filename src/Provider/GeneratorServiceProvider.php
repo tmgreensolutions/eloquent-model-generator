@@ -2,38 +2,36 @@
 
 namespace Krlove\EloquentModelGenerator\Provider;
 
-use Illuminate\Foundation\Application;
-#use Laravel\Lumen\Application;
+use Illuminate\Console\Events\CommandStarting;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Krlove\EloquentModelGenerator\Command\GenerateModelCommand;
-use Krlove\EloquentModelGenerator\EloquentModelBuilder;
+use Krlove\EloquentModelGenerator\Command\GenerateModelsCommand;
+use Krlove\EloquentModelGenerator\EventListener\GenerateCommandEventListener;
+use Krlove\EloquentModelGenerator\Generator;
 use Krlove\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
 use Krlove\EloquentModelGenerator\Processor\CustomPropertyProcessor;
-use Krlove\EloquentModelGenerator\Processor\ExistenceCheckerProcessor;
 use Krlove\EloquentModelGenerator\Processor\FieldProcessor;
 use Krlove\EloquentModelGenerator\Processor\NamespaceProcessor;
 use Krlove\EloquentModelGenerator\Processor\RelationProcessor;
 use Krlove\EloquentModelGenerator\Processor\TableNameProcessor;
+use Krlove\EloquentModelGenerator\TypeRegistry;
 
-/**
- * Class GeneratorServiceProvider
- * @package Krlove\EloquentModelGenerator\Provider
- */
 class GeneratorServiceProvider extends ServiceProvider
 {
-    const PROCESSOR_TAG = 'eloquent_model_generator.processor';
+    public const PROCESSOR_TAG = 'eloquent_model_generator.processor';
 
-    /**
-     * {@inheritDoc}
-     */
     public function register()
     {
         $this->commands([
             GenerateModelCommand::class,
+            GenerateModelsCommand::class,
         ]);
 
+        $this->app->singleton(TypeRegistry::class);
+        $this->app->singleton(GenerateCommandEventListener::class);
+
         $this->app->tag([
-            ExistenceCheckerProcessor::class,
             FieldProcessor::class,
             NamespaceProcessor::class,
             RelationProcessor::class,
@@ -42,8 +40,13 @@ class GeneratorServiceProvider extends ServiceProvider
             CustomPrimaryKeyProcessor::class,
         ], self::PROCESSOR_TAG);
 
-        $this->app->bind(EloquentModelBuilder::class, function (Application $app) {
-            return new EloquentModelBuilder(iterator_to_array($app->tagged(self::PROCESSOR_TAG)));
+        $this->app->bind(Generator::class, function ($app) {
+            return new Generator($app->tagged(self::PROCESSOR_TAG));
         });
+    }
+
+    public function boot()
+    {
+        Event::listen(CommandStarting::class, [GenerateCommandEventListener::class, 'handle']);
     }
 }

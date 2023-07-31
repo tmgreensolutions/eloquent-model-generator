@@ -31,7 +31,6 @@ class GenerateModelCommand extends Command
         parent::__construct();
 
         $this->generator = $generator;
-        $this->appConfig = $appConfig;
 
         Type::addType('_int4', 'Doctrine\DBAL\Types\IntegerType');
         Type::addType('raster', 'Jsor\Doctrine\PostGIS\Types\RasterType');

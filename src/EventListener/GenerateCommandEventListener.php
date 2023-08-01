@@ -2,7 +2,12 @@
 
 namespace Krlove\EloquentModelGenerator\EventListener;
 
+use Doctrine\DBAL\Types\IntegerType;
+use Doctrine\DBAL\Types\StringType;
+use Doctrine\DBAL\Types\Type;
 use Illuminate\Console\Events\CommandStarting;
+use Jsor\Doctrine\PostGIS\Types\GeographyType;
+use Jsor\Doctrine\PostGIS\Types\GeometryType;
 use Krlove\EloquentModelGenerator\TypeRegistry;
 
 class GenerateCommandEventListener
@@ -12,7 +17,12 @@ class GenerateCommandEventListener
         'krlove:generate:models',
     ];
 
-    public function __construct(private TypeRegistry $typeRegistry) {}
+    public function __construct(private TypeRegistry $typeRegistry) {
+        Type::addType('cInt4', IntegerType::class);
+        Type::addType('cRaster', StringType::class);
+        Type::addType('cGeometry', GeometryType::class);
+        Type::addType('cGeography', GeographyType::class);
+    }
 
     public function handle(CommandStarting $event): void
     {

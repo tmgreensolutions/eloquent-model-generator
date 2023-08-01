@@ -9,11 +9,6 @@ use Krlove\EloquentModelGenerator\Helper\Prefix;
 use Symfony\Component\Console\Input\InputArgument;
 
 /**
- * Custom Type Definitions
- */
-use Doctrine\DBAL\Types\Type;
-
-/**
  * Class GenerateModelCommand
  * @package Krlove\EloquentModelGenerator\Command
  */
@@ -26,13 +21,6 @@ class GenerateModelCommand extends Command
     public function __construct(private Generator $generator, private DatabaseManager $databaseManager)
     {
         parent::__construct();
-
-        $this->generator = $generator;
-
-        Type::addType('_int4', 'Doctrine\DBAL\Types\IntegerType');
-        Type::addType('raster', 'Doctrine\DBAL\Types\StringType');
-        Type::addType('geometry', 'Jsor\Doctrine\PostGIS\Types\GeometryType');
-        Type::addType('geography', 'Jsor\Doctrine\PostGIS\Types\GeographyType');
     }
 
     public function handle()
